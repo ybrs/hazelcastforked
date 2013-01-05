@@ -910,6 +910,10 @@ public final class Predicates {
                         final String camelName = Character.toUpperCase(name.charAt(0)) + name.substring(1);
                         possibleMethodNames.add("get" + camelName);
                         possibleMethodNames.add("is" + camelName);
+                        
+                        System.out.println("here we gooo !!!!!!!!!!!! XXXXXXXX");
+                        
+                        
                         if (name.equals("this")) {
                             localGetter = new ThisGetter(parent, obj);
                         } else {
@@ -946,6 +950,19 @@ public final class Predicates {
                                 }
                             }
                         }
+                        
+                        if (localGetter == null){
+                    		System.out.println("here we gooo !!!!!!!!!!!! 2222 - " + name );
+                    		try {
+                                final Method method = clazz.getMethod("getValue", String.class);
+                                method.setAccessible(true);
+                                localGetter = new MethodWithParameterGetter(parent, method, name);
+                                clazz = method.getReturnType();
+                    		} catch (NoSuchMethodError ignored){
+                    			
+                    		}
+                        }
+                        
                         if (localGetter == null) {
                             throw new RuntimeException("There is no suitable accessor for '" + name + "'");
                         }
@@ -995,6 +1012,37 @@ public final class Predicates {
             }
         }
 
+        class MethodWithParameterGetter extends Getter {
+            final Method method;
+            final String methodname;
+
+            MethodWithParameterGetter(Getter parent, Method method, String methodname) {
+                super(parent);
+                this.method = method;
+                this.methodname = methodname;
+            }
+
+            Object getValue(Object obj) throws Exception {
+                obj = parent != null ? parent.getValue(obj) : obj;
+                Object ret = obj != null ? method.invoke(obj,this.methodname) : null;
+                
+                System.out.println("got value from employee "+ret);
+                
+                return ret;
+            }
+
+            Class getReturnType() {
+                return this.method.getReturnType();
+            }
+
+            @Override
+            public String toString() {
+                return "MethodGetter [parent=" + parent + ", method=" + method.getName() + "]";
+            }
+        }
+        
+        
+        
         class FieldGetter extends Getter {
             final Field field;
 

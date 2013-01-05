@@ -134,7 +134,7 @@ class AddressPicker {
                 addressDef = pickLoopbackAddress(); 
             } else {
                 if (preferIPv4Stack()) {
-                    log(Level.INFO, "Prefer IPv4 stack is true.");
+                    log(Level.INFO, "Prefer [IPv4 stack] is true.");
                 }
                 if (interfaces.size() > 0) {
                     addressDef = pickMatchingAddress(interfaces);
@@ -205,7 +205,7 @@ class AddressPicker {
             for (Entry<String, String> entry : addressDomainMap.entrySet()) {
                 interfaces.add(new InterfaceDefinition(entry.getValue(), entry.getKey()));
             }
-            log(Level.INFO, "Interfaces is disabled, trying to pick one address from TCP-IP config " +
+            log(Level.INFO, "Interfaces is DISABLED, trying to pick one address from [TCP-IP] config " +
                                    "addresses: " + interfaces);
         }
         return interfaces;
