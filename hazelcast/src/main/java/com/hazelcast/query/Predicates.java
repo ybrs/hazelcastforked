@@ -1025,9 +1025,6 @@ public final class Predicates {
             Object getValue(Object obj) throws Exception {
                 obj = parent != null ? parent.getValue(obj) : obj;
                 Object ret = obj != null ? method.invoke(obj,this.methodname) : null;
-                
-                System.out.println("got value from employee "+ret);
-                
                 return ret;
             }
 
