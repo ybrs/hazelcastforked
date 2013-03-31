@@ -1,3 +1,7 @@
+this is not hazelcast, it contains a few commits - and lots of debug prints - just to make https://github.com/ybrs/mergen work.
+
+for hazelcast please go to https://github.com/hazelcast/hazelcast 
+
 ## Hazelcast is a clustering and highly scalable data distribution platform for Java.
 
 With its various distributed data structures, distributed caching capabilities, elastic nature, memcache support,
